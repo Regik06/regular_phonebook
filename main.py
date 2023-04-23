@@ -5,8 +5,9 @@ import csv
 
 
 def compare_and_join(l1, l2):
-    if l1[0] == l2[0] and l1[1] == l2[1] and l1[2] == l2[2]:
-        print("Дубль:", l1[0:3])
+    '''ищем дубли по фамилии и имени'''
+    if l1[0] == l2[0] and l1[1] == l2[1]:
+        print("Дубль:", l1[0:2])
         if l1[3] == "": l1[3] = l2[3]
         if l1[4] == "": l1[4] = l2[4]
         if l1[5] == "": l1[5] = l2[5]
@@ -22,6 +23,7 @@ with open("phonebook_raw.csv") as f:
 
 list_info = []
 for contact in contacts_list:
+    '''ищем данные -тел, фио'''
     fio = ' '.join(contact[:2]).strip().split(' ')
     contact[:len(fio)] = fio
     if fio:
@@ -39,7 +41,10 @@ while i < len(list_info):
     contacts_list.append(list_info[i])
     i += 1
 
-pprint(contacts_list)
 
 
+with open("phonebook.csv", "w") as f:
+    datawriter = csv.writer(f, delimiter=',')
+    '''записываем измененные данные в новый файл'''
+    datawriter.writerows(contacts_list)
 
